@@ -1,0 +1,7 @@
+table.wp-list-table .column-thumb img.attachment-shop_tiny {
+	width: 20px;
+	height: 20px;
+}
+table.widefat.pages div.row-actions {
+	display: none
+}
