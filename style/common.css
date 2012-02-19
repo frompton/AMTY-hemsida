@@ -184,15 +184,15 @@ margin: 0;
 .widget-article h2 {
 	padding: 0 0 10px 0;
 }
-.widget_product_categories ul {
+.jigoshop_product_categories ul {
 	list-style: none;
 	padding: 0;
 }
-.widget_product_categories ul ul {
+.jigoshop_product_categories ul ul {
 	display: block;
 	padding: 5px 10px;
 }
-.widget_product_categories ul a {
+.jigoshop_product_categories ul a {
 	font-size: 14px;
 	text-decoration: none;
 }
@@ -257,6 +257,9 @@ margin: 0;
 .size-guide-link {
 	color: #f00;
 	font-weight: bold;
+}
+.assistive-text {
+    display: none;
 }
 .custom-filter {
 	padding: 10px 0;
@@ -384,9 +387,8 @@ margin: 0;
     border-radius: 4px;
     color: #FFFFFF;
     cursor: pointer;
-    float: left;
     line-height: 1em;
-    padding: 4px 6px;
+    padding: 6px;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
