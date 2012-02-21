@@ -131,6 +131,85 @@
 				}
 				return $links;
 			}
+            public function test_upgrade() {
+                // convert products
+
+                $args = array(
+                    'post_type'	  => 'product',
+                    'numberposts' => -1,
+                    'post_status' => 'any', // Fixes draft products not being upgraded
+                );
+
+                $posts = get_posts( $args );
+
+                foreach( $posts as $post ) {
+
+
+                    $product_attributes = get_post_meta( $post->ID, 'product_attributes', true );
+
+                    if ( is_array($product_attributes) ) {
+                     /*   foreach( $product_attributes as $key => $attribute ) {
+
+                            // We use true/false for these now
+                            if ( isset( $attribute['visible'] ) )
+                                $attribute['visible']     = ( $attribute['visible'] == 'yes' ) ? true : false;
+
+                            if ( isset( $attribute['variation'] ) )
+                                $attribute['variation']   = ( $attribute['variation'] == 'yes' ) ? true : false;
+
+                            if ( isset( $attribute['is_taxonomy'] ) )
+                                $attribute['is_taxonomy'] = ( $attribute['is_taxonomy'] == 'yes' ) ? true : false;
+
+                            $product_attributes[$key] = $attribute;
+                        }
+
+                        update_post_meta( $post->ID, 'product_attributes', $product_attributes );
+                     */
+                        print_r($product_attributes);
+                    }
+
+                }
+
+                // Variations
+                $args = array(
+                    'post_type'	  => 'product_variation',
+                    'numberposts' => -1,
+                    'post_status' => 'any', // Fixes draft products not being upgraded
+                );
+
+                $posts = get_posts( $args );
+/*
+                foreach( $posts as $post ) {
+
+                    // Convert SKU key to lowercase
+                    $wpdb->update( $wpdb->postmeta, array('meta_key' => 'sku'), array('post_id' => $post->ID, 'meta_key' => 'sku') );
+
+                    // Convert 'price' key to regular_price
+                    $wpdb->update( $wpdb->postmeta, array('meta_key' => 'regular_price'), array('post_id' => $post->ID, 'meta_key' => 'price') );
+
+                    $taxes = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = {$post->ID} AND meta_key LIKE 'tax_%' ");
+
+                    // Update catch all prices
+                    $parent_id = $post->post_parent;
+                    $parent_reg_price = get_post_meta( $parent_id, 'regular_price', true );
+                    $parent_sale_price = get_post_meta( $parent_id, 'sale_price', true );
+
+                    if ( ! get_post_meta( $post->ID, 'regular_price', true) && $parent_reg_price )
+                        update_post_meta( $post->ID, 'regular_price', $parent_reg_price );
+
+                    if( ! get_post_meta( $post->ID, 'sale_price', true) && $parent_sale_price )
+                        update_post_meta( $post->ID, 'sale_price', $parent_sale_price );
+
+                    $variation_data = array();
+                    foreach( $taxes as $tax ) {
+                        $variation_data[$tax->meta_key] = $tax->meta_value;
+                        delete_post_meta( $post->ID, $tax->meta_key );
+                    }
+
+                    update_post_meta( $post->ID, 'variation_data', $variation_data );
+
+                }*/
+            }
 
 		}
 	}
