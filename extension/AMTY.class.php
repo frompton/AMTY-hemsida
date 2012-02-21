@@ -145,29 +145,37 @@
 
                 foreach( $posts as $post ) {
 
+                    // Unserialize all product_data keys to individual key => value pairs
+                    $product_data = get_post_meta( $post->ID, 'product_data', true );
+                    if ( is_array($product_data) ) {
+                        foreach( $product_data as $key => $value ) {
 
-                    $product_attributes = get_post_meta( $post->ID, 'product_attributes', true );
+                            // Convert all keys to lowercase
+                            // @todo: Needs testing especially with 3rd party plugins using product_data
+                            $key = strtolower($key);
 
-                    if ( is_array($product_attributes) ) {
-                        foreach( $product_attributes as $key => $attribute ) {
+                            // We now call it tax_classes & its an array
+                            if ( $key == 'tax_class' ) {
 
-                            // We use true/false for these now
-                            if ( isset( $attribute['visible'] ) )
-                                $attribute['visible']     = true;
+                                if ( $value )
+                                    $value = (array) $value;
+                                else
+                                    $value = array('*');
 
-                            if ( isset( $attribute['variation'] ) )
-                                $attribute['variation']   = true;
+                                $key = 'tax_classes';
+                            }
 
-                            if ( isset( $attribute['is_taxonomy'] ) )
-                                $attribute['is_taxonomy'] = true;
+                            // Convert manage stock to true/false
+                            if ( $key == 'manage_stock' ) {
+                                $value = ( $value == 'yes' ) ? true : false;
+                            }
 
-                            if ( isset( $attribute['name'] ) )
-                                $attribute['name'] = '';
-                            $product_attributes[$key] = $attribute;
+                            // Create the meta
+                            update_post_meta( $post->ID, $key, $value );
+
+                            // Remove the old meta
+                            delete_post_meta( $post->ID, 'product_data' );
                         }
-
-                        update_post_meta( $post->ID, 'product_attributes', $product_attributes );
-
                     }
 
                 }
