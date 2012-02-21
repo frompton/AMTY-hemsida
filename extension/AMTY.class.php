@@ -148,7 +148,7 @@
                     $product_attributes = get_post_meta( $post->ID, 'product_attributes', true );
 
                     if ( is_array($product_attributes) ) {
-                     /*   foreach( $product_attributes as $key => $attribute ) {
+                        foreach( $product_attributes as $key => $attribute ) {
 
                             // We use true/false for these now
                             if ( isset( $attribute['visible'] ) )
@@ -164,10 +164,7 @@
                         }
 
                         update_post_meta( $post->ID, 'product_attributes', $product_attributes );
-                     */
-echo $post->ID . ' - ';
-                        print_r($product_attributes);
-                        echo '<br>';
+
                     }
 
                 }
