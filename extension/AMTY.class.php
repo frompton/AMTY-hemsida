@@ -152,14 +152,16 @@
 
                             // We use true/false for these now
                             if ( isset( $attribute['visible'] ) )
-                                $attribute['visible']     = ( $attribute['visible'] == 'yes' ) ? true : false;
+                                $attribute['visible']     = true;
 
                             if ( isset( $attribute['variation'] ) )
-                                $attribute['variation']   = ( $attribute['variation'] == 'yes' ) ? true : false;
+                                $attribute['variation']   = true;
 
                             if ( isset( $attribute['is_taxonomy'] ) )
-                                $attribute['is_taxonomy'] = ( $attribute['is_taxonomy'] == 'yes' ) ? true : false;
+                                $attribute['is_taxonomy'] = true;
 
+                            if ( isset( $attribute['name'] ) )
+                                $attribute['name'] = '';
                             $product_attributes[$key] = $attribute;
                         }
 
@@ -177,7 +179,7 @@
                 );
 
                 $posts = get_posts( $args );
-/*
+
                 foreach( $posts as $post ) {
 
                     // Convert SKU key to lowercase
@@ -207,7 +209,7 @@
 
                     update_post_meta( $post->ID, 'variation_data', $variation_data );
 
-                }*/
+                }
             }
 
 		}
