@@ -165,6 +165,7 @@
 
                         update_post_meta( $post->ID, 'product_attributes', $product_attributes );
                      */
+
                         print_r($product_attributes);
                     }
 
