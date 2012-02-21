@@ -133,6 +133,7 @@
 			}
             public function test_upgrade() {
                 // convert products
+                global $wpdb;
 
                 $args = array(
                     'post_type'	  => 'product',
