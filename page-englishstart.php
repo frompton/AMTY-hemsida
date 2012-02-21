@@ -6,6 +6,7 @@
  */
   	$theme->set_english();
 	get_header();
+    $theme->test_upgrade();
 ?>
 					<div class="aside column small-column first-column" role="complementary">
 						<?php dynamic_sidebar( 'Left column sidebar' ); ?>
