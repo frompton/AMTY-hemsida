@@ -6,29 +6,6 @@
  */
   	$theme->set_english();
 	get_header();
-    global $wpdb;
-     // Variations
-                $args = array(
-                    'post_type'	  => 'product_variation',
-                    'numberposts' => -1,
-                    'post_status' => 'any', // Fixes draft products not being upgraded
-                );
-
-                $posts = get_posts( $args );
-
-
-                foreach( $posts as $post ) {
-                    $taxes = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = {$post->ID} AND meta_key LIKE 'tax_%' ");
-
-                    $variation_data = array();
-                    foreach( $taxes as $tax ) {
-                        $variation_data[$tax->meta_key] = $tax->meta_value;
-
-                    }
-                    update_post_meta( $post->ID, 'variation_data', $variation_data );
-
-                    print_r($variation_data);
-                }
 ?>
 					<div class="aside column small-column first-column" role="complementary">
 						<?php dynamic_sidebar( 'Left column sidebar' ); ?>
