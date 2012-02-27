@@ -75,39 +75,29 @@ body {
 
 /* HEADER */
 #logo {
-	position: absolute;
-	left: 20px;
-	top: 20px;
-	width: 807px;
-	height: 70px;
-	padding: 0;
+	padding: 20px 0 0 20px;
 }
-#language {
+#header-tools {
 	position: absolute;
-	right: 20px;
+	right: 12px;
 	top: 20px;
 }
-#language a {
+#header-tools a {
 	display: block;
-	width: 16px;
-	height: 11px;
-	text-indent: -999em;
+    padding-left: 20px;
 }
-#language a.lang-en {
+#header-tools a:hover,
+#header-tools a:focus {
+    text-decoration: underline;
+}
+#header-tools a.lang-en {
 	background: #fff url(../image/flag-en.png) left top no-repeat;
 }
-#language a.lang-se {
+#header-tools a.lang-se {
 	background: #fff url(../image/flag-se.png) left top no-repeat;
 }
-#logo a{
-	display: block;
-	width: 807px;
-	height: 160px;
-	background: transparent url(http://kyckling.nu/amty.se/title_mirror_logo.png) top left no-repeat;
-	text-indent: -999em;
-	overflow: hidden;
-	padding: 0;
-margin: 0;
+#header-tools a.facebook {
+    background: #fff url(../image/facebook.png) left top no-repeat;
 }
 #top-nav {
 	position: absolute;

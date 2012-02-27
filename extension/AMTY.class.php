@@ -30,8 +30,10 @@
 				add_custom_background();
 
 				add_custom_image_header('', array($this, 'amty_admin_header_style'));
-				define( 'HEADER_IMAGE_WIDTH',  571 );
-				define( 'HEADER_IMAGE_HEIGHT', 70 );
+				define( 'HEADER_IMAGE_WIDTH',  807 );
+				define( 'HEADER_IMAGE_HEIGHT', 160 );
+                define( 'HEADER_IMAGE', '%s/image/headers/title_mirror_logo.png' );
+                define( 'NO_HEADER_TEXT', true );
 
 				register_default_headers( array(
 					'original' => array(
@@ -131,95 +133,5 @@
 				}
 				return $links;
 			}
-            public function test_upgrade() {
-                // convert products
-                global $wpdb;
-
-                $args = array(
-                    'post_type'	  => 'product',
-                    'numberposts' => -1,
-                    'post_status' => 'any', // Fixes draft products not being upgraded
-                );
-
-                $posts = get_posts( $args );
-
-                foreach( $posts as $post ) {
-
-                    // Unserialize all product_data keys to individual key => value pairs
-                    $product_data = get_post_meta( $post->ID, 'product_data', true );
-                    if ( is_array($product_data) ) {
-                        foreach( $product_data as $key => $value ) {
-
-                            // Convert all keys to lowercase
-                            // @todo: Needs testing especially with 3rd party plugins using product_data
-                            $key = strtolower($key);
-
-                            // We now call it tax_classes & its an array
-                            if ( $key == 'tax_class' ) {
-
-                                if ( $value )
-                                    $value = (array) $value;
-                                else
-                                    $value = array('*');
-
-                                $key = 'tax_classes';
-                            }
-
-                            // Convert manage stock to true/false
-                            if ( $key == 'manage_stock' ) {
-                                $value = ( $value == 'yes' ) ? true : false;
-                            }
-
-                            // Create the meta
-                            update_post_meta( $post->ID, $key, $value );
-
-                            // Remove the old meta
-                            delete_post_meta( $post->ID, 'product_data' );
-                        }
-                    }
-
-                }
-
-                // Variations
-                $args = array(
-                    'post_type'	  => 'product_variation',
-                    'numberposts' => -1,
-                    'post_status' => 'any', // Fixes draft products not being upgraded
-                );
-
-                $posts = get_posts( $args );
-
-                foreach( $posts as $post ) {
-
-                    // Convert SKU key to lowercase
-                    $wpdb->update( $wpdb->postmeta, array('meta_key' => 'sku'), array('post_id' => $post->ID, 'meta_key' => 'sku') );
-
-                    // Convert 'price' key to regular_price
-                    $wpdb->update( $wpdb->postmeta, array('meta_key' => 'regular_price'), array('post_id' => $post->ID, 'meta_key' => 'price') );
-
-                    $taxes = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = {$post->ID} AND meta_key LIKE 'tax_%' ");
-
-                    // Update catch all prices
-                    $parent_id = $post->post_parent;
-                    $parent_reg_price = get_post_meta( $parent_id, 'regular_price', true );
-                    $parent_sale_price = get_post_meta( $parent_id, 'sale_price', true );
-
-                    if ( ! get_post_meta( $post->ID, 'regular_price', true) && $parent_reg_price )
-                        update_post_meta( $post->ID, 'regular_price', $parent_reg_price );
-
-                    if( ! get_post_meta( $post->ID, 'sale_price', true) && $parent_sale_price )
-                        update_post_meta( $post->ID, 'sale_price', $parent_sale_price );
-
-                    $variation_data = array();
-                    foreach( $taxes as $tax ) {
-                        $variation_data[$tax->meta_key] = $tax->meta_value;
-                        delete_post_meta( $post->ID, $tax->meta_key );
-                    }
-
-                    update_post_meta( $post->ID, 'variation_data', $variation_data );
-
-                }
-            }
-
-		}
+        }
 	}

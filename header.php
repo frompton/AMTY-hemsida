@@ -21,13 +21,15 @@
 	<body id="amty" <?php body_class();?>>
 		<div id="page-container">
 			<div id="page-header" class="header">
-				<div id="language">
+				<div id="header-tools">
 				<?php if( $theme->english ):?>
 					<a class="lang-se" href="/wordpress">På svenska</a>
 					<?php $navigation_name = 'english-navigation'; ?>
+                    <a class="facebook" href="https://www.facebook.com/pages/AMTY-A-message-to-you/274882525917536">Like us on Facebook</a>
 				<?php else: ?>
 					<a class="lang-en" href="/wordpress/en">In English</a>
 					<?php $navigation_name = 'top-navigation'; ?>
+                    <a class="facebook" href="https://www.facebook.com/pages/AMTY-A-message-to-you/274882525917536">Gilla oss på Facebook</a>
 				<?php endif; ?>
 				</div>
 <?php if( !is_front_page() ):?>

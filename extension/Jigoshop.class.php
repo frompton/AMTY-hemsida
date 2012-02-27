@@ -15,6 +15,8 @@
 				add_action('jigoshop_after_main_content', array(&$this, 'jigoshop_after_main_content'), 10);
 				
 				remove_action( 'jigoshop_sidebar', 'jigoshop_get_sidebar', 10);
+
+                add_action( 'admin_menu', array(&$this, 'jigoshop_admin_menu' ) );
 				
 				/* Pagination in loop-shop */
 				remove_action( 'jigoshop_pagination', 'jigoshop_pagination', 10 );
@@ -52,17 +54,28 @@
 				remove_post_type_support( 'product', 'comments' );
 			}
 
+            public function jigoshop_admin_menu() {
+                add_submenu_page('jigoshop', __('Lagersaldo','jigoshop'), __('Lagersaldo','jigoshop'), 'manage_options', 'jigoshop_storevalue', array( &$this, 'jigoshop_store_value' ) );
+            }
+            public function jigoshop_store_value() {
+                echo '<div class="wrap jigoshop">';
+                echo '<div class="icon32 icon32-jigoshop-debug" id="icon-jigoshop"><br/></div>';
+                echo '<h2>' . __('Lagersaldo','jigoshop') . '</h2>';
+                echo '<p><strong>Totalt lagersaldo:</strong> ' . $this->calculate_store_value() . ' kr</p>';
+                echo '</div>';
+            }
 			function wp_register_widgets() {
 				register_widget('Jigoshop_Widget_AZ_Filter');
 			}
 			
 			public function wp_add_metadata_boxes(){
-				add_meta_box( $this->domain . '_extra_information_box', __( 'Extra information (storlekar)', $this->domain ), array( &$this, 'wp_extra_information_metabox_content' ), 'product', 'normal' );
+				add_meta_box( $this->domain . '_extra_information_box', __( 'Extra information', $this->domain ), array( &$this, 'wp_extra_information_metabox_content' ), 'product', 'normal' );
 			}			
 			
 			public function wp_extra_information_metabox_content( $post ){
 				wp_nonce_field( plugin_basename( __FILE__ ), $this->domain . '-nonce' );
-				$extra_information = get_post_meta( $post->ID, '_' . $this->domain . '_extra_information', true );
+                $extra_information = get_post_meta( $post->ID, '_' . $this->domain . '_extra_information', true );
+                $purchase_price = get_post_meta( $post->ID, '_' . $this->domain . '_purchase_price', true );
 				require( dirname( __FILE__ ) . '/template/extra-information-metabox.tpl.php' );			
 			}
 			
@@ -85,12 +98,17 @@
 						return $post_id;
 					}
 				}
-				
-				update_post_meta( $post_id, '_' . $this->domain . '_extra_information', $_POST[$this->domain . '_extra_information']);
+				if ( isset( $_POST[$this->domain . '_extra_information'] ) ) {
+                    update_post_meta( $post_id, '_' . $this->domain . '_extra_information', $_POST[$this->domain . '_extra_information']);
+                }
+                if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
+                    update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
+                }
 			}
 			public function wp_delete_post_metadata( $post_id ){
 				delete_post_meta( $post_id, '_' . $this->domain . '_extra_information' );
-			}
+                delete_post_meta( $post_id, '_' . $this->domain . '_purchase_price' );
+            }
 			
 			
 			public function shop_small_image_size() {
@@ -231,6 +249,72 @@
 				$html = str_replace(']]>', ']]&gt;', $html);
 				return $html;
 			}
+            public function calculate_store_value() {
+
+                $total_price = 0;
+
+                $args = array(
+                    'post_type'	  => 'product',
+                    'numberposts' => -1,
+                    'post_status' => 'any'
+                );
+
+                $posts = get_posts( $args );
+
+                foreach( $posts as $post ) {
+
+                    $purchase_price = get_post_meta( $post->ID, '_' . $this->domain . '_purchase_price', true );
+                    if (is_numeric( $purchase_price ) ) {
+
+                        $attributes = (array) maybe_unserialize( get_post_meta($post->ID, 'product_attributes', true) );
+
+                        if ( $this->has_variable_attributes( $attributes ) ) {
+                            // Get all variations of the product
+                            $variations = get_posts(array(
+                                'post_type'   => 'product_variation',
+                                'post_status' => array('draft', 'publish'),
+                                'numberposts' => -1,
+                                'orderby'     => 'id',
+                                'order'       => 'desc',
+                                'post_parent' => $post->ID
+                            ));
+
+                            foreach( $variations as $variation ) {
+                                $stock = get_post_meta( $variation->ID, 'stock', true );
+                                $purchase_price = $purchase_price * $stock;
+                                $total_price = $total_price + $purchase_price;
+                            }
+
+                        } else {
+                            $stock = get_post_meta( $post->ID, 'stock', true );
+                            $purchase_price = $purchase_price * $stock;
+                            $total_price = $total_price + $purchase_price;
+                        }
+
+                    }
+
+                }
+
+                return $total_price;
+            }
+            /**
+             * Checks all the product attributes for variation defined attributes
+             *
+             * @param   mixed   Attributes
+             * @return  bool
+             */
+            private function has_variable_attributes( $attributes ) {
+                if ( ! $attributes )
+                    return false;
+
+                foreach ( $attributes as $attribute ) {
+                    if ( isset($attribute['variation']) && $attribute['variation'] )
+                        return true;
+                }
+
+                return false;
+            }
+
 			public function jigoshop_az_filter( $filtered_posts ) {
 
 				if (isset($_GET['starting_letter'])) :
