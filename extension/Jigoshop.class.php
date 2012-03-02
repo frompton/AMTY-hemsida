@@ -57,6 +57,7 @@
             public function jigoshop_admin_menu() {
                 add_submenu_page('jigoshop', __('Lagersaldo','jigoshop'), __('Lagersaldo','jigoshop'), 'manage_options', 'jigoshop_storevalue', array( &$this, 'jigoshop_store_value' ) );
             }
+
             public function jigoshop_store_value() {
                 echo '<div class="wrap jigoshop">';
                 echo '<div class="icon32 icon32-jigoshop-debug" id="icon-jigoshop"><br/></div>';
@@ -64,7 +65,8 @@
                 echo '<p><strong>Totalt lagersaldo:</strong> ' . $this->calculate_store_value() . ' kr</p>';
                 echo '</div>';
             }
-			function wp_register_widgets() {
+
+			public function wp_register_widgets() {
 				register_widget('Jigoshop_Widget_AZ_Filter');
 			}
 			
@@ -105,6 +107,7 @@
                     update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
                 }
 			}
+
 			public function wp_delete_post_metadata( $post_id ){
 				delete_post_meta( $post_id, '_' . $this->domain . '_extra_information' );
                 delete_post_meta( $post_id, '_' . $this->domain . '_purchase_price' );
@@ -203,6 +206,7 @@
 					echo '<li' . ($current_tab=='#tab-extra-information' ? ' class="active"' : '') . '><a href="#tab-extra-information">' . __('Storleksguide', 'amty') . '</a></li>';
 				}
 			}	
+
 			public function jigoshop_product_extra_information_panel() {
 				global $_product;
 				if ($_product->has_attributes()) {
@@ -224,7 +228,6 @@
 			/**
 			 * Pagination
 			 **/
-
 			public function jigoshop_pagination() {
 			
 				global $wp_query;
@@ -243,12 +246,14 @@
 		    	endif;
 			
 			}
+
 			public function get_page_content($pageId) {
 				$include_page = get_page($pageId);
 				$html = apply_filters('the_content', $include_page->post_content);
 				$html = str_replace(']]>', ']]&gt;', $html);
 				return $html;
 			}
+
             public function calculate_store_value() {
 
                 $total_price = 0;
@@ -297,6 +302,7 @@
 
                 return $total_price;
             }
+
             /**
              * Checks all the product attributes for variation defined attributes
              *
