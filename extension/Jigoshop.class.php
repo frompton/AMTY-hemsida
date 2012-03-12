@@ -76,8 +76,9 @@
 			
 			public function wp_extra_information_metabox_content( $post ){
 				wp_nonce_field( plugin_basename( __FILE__ ), $this->domain . '-nonce' );
-                $extra_information = get_post_meta( $post->ID, '_' . $this->domain . '_extra_information', true );
                 $purchase_price = get_post_meta( $post->ID, '_' . $this->domain . '_purchase_price', true );
+                $extra_information = get_post_meta( $post->ID, '_' . $this->domain . '_extra_information', true );
+                $internal_information = get_post_meta( $post->ID, '_' . $this->domain . '_internal_information', true );
 				require( dirname( __FILE__ ) . '/template/extra-information-metabox.tpl.php' );			
 			}
 			
@@ -100,11 +101,14 @@
 						return $post_id;
 					}
 				}
+                if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
+                    update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
+                }
 				if ( isset( $_POST[$this->domain . '_extra_information'] ) ) {
                     update_post_meta( $post_id, '_' . $this->domain . '_extra_information', $_POST[$this->domain . '_extra_information']);
                 }
-                if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
-                    update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
+                if ( isset( $_POST[$this->domain . '_internal_information'] ) ) {
+                    update_post_meta( $post_id, '_' . $this->domain . '_internal_information', $_POST[$this->domain . '_internal_information']);
                 }
 			}
 
@@ -286,13 +290,15 @@
 
                             foreach( $variations as $variation ) {
                                 $stock = get_post_meta( $variation->ID, 'stock', true );
-                                $purchase_price = $purchase_price * $stock;
-                                $total_price = $total_price + $purchase_price;
+                                $variation_purchase_price = $purchase_price * $stock;
+                                //DEBUG: echo $variation->post_title . ' - ' . $stock . ' - ' . $variation_purchase_price . '<br>';
+                                $total_price = $total_price + $variation_purchase_price;
                             }
 
                         } else {
                             $stock = get_post_meta( $post->ID, 'stock', true );
                             $purchase_price = $purchase_price * $stock;
+                            //DEBUG: echo $post->post_title . ' - ' . $stock . ' - ' . $purchase_price . '<br>';
                             $total_price = $total_price + $purchase_price;
                         }
 

@@ -9,3 +9,6 @@
 
 		<p><?php echo __( 'Fyll i extra information om storlekar. Obs, denna information visas endast om produkten har storlekar', 'amty' );?></p>
 		<textarea style="width: 100%; height: 150px;" id="<?php echo $this->domain . '_extra_information';?>" name="<?php echo $this->domain . '_extra_information';?>"><?php echo $extra_information ?></textarea>
+
+        <p><?php echo __( 'Övrig info för internt bruk, visas ej för kund', 'amty' );?></p>
+        <textarea style="width: 100%; height: 150px;" id="<?php echo $this->domain . '_internal_information';?>" name="<?php echo $this->domain . '_internal_information';?>"><?php echo $internal_information ?></textarea>

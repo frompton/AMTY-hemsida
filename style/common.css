@@ -300,6 +300,7 @@ body {
 }
 #amty form.cart .button-alt {
 	clear: both;
+    padding: 6px;
 }
 #amty .product_meta {
 	clear: both;
@@ -317,7 +318,7 @@ body {
 	display: none;
 }
 #amty .quantity input.qty {
-	height: 19px;
+	height: 15px;
 }
 #amty div.product #tabs ul.tabs {
 	border-bottom: 1px solid #ddd;
@@ -344,7 +345,9 @@ body {
 	float: right;
 }
 #amty form.cart .variations select {
-    width: 170px;
+    float: left;
+    width: 100%;
+    margin: 6px 0;
 	border: 1px solid #888;
 	-webkit-border-radius: 4px;
     -moz-border-radius: 4px;
