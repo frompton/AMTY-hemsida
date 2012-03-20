@@ -42,6 +42,9 @@
 						'description' => __( 'Den gamla', $this->domain )
 					)
 				));
+
+                add_shortcode( 'ip_address', array(&$this, 'create_shortcode_ip_address') );
+
 			}
 			public function set_english() {
 				$this->english = true;
@@ -99,6 +102,12 @@
 			public function amty_admin_header_style() {
 				echo '<style>.appearance_page_custom-header #headimg { min-height: 70px;}</style>';
 			}
+
+            public function create_shortcode_ip_address() {
+                $ip = $_SERVER['REMOTE_ADDR'];
+                return $ip;
+            }
+
 			/*
 			*	@param null $post_id int
 			*	@return void
