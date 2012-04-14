@@ -40,7 +40,11 @@
 
 				add_filter( 'query_vars', array(&$this, 'wp_add_query_vars' ) );
 				add_action( 'jigoshop_before_shop_loop', array(&$this, 'jigoshop_before_shop_loop' ) );
-				
+
+                //Remove field for Company on check out
+                add_filter( 'jigoshop_billing_fields', array( &$this, 'jigoshop_billing_fields' ) );
+                add_filter( 'jigoshop_shipping_fields', array( &$this, 'jigoshop_shipping_fields' ) );
+
 				/* REGISTER NEW WIDGETS */
 				add_action( 'widgets_init', array(&$this, 'wp_register_widgets' ) );
 				
@@ -308,7 +312,25 @@
 
                 return $total_price;
             }
-
+            public function jigoshop_billing_fields($fields) {
+                $new_fields = array();
+                foreach ($fields as $field) {
+                    if ($field['name'] != 'billing-company') {
+                        if ($field['name'] == 'billing-phone') {
+                            $field['class'] = array('form-row-first');
+                        }
+                        array_push($new_fields, $field);
+                        if ($field['name'] == 'billing-email') {
+                            array_push( $new_fields, array( 'type' => 'input', 'class' => array('form-row-last'),  'name' => 'billing-email-validate', 'required' => 1, 'label' => __('Bekräfta e-post /<br>Confirm Email address', 'jigoshop'), 'placeholder' => __('you@domain.com', 'jigoshop') ) );
+                        }
+                    }
+                }
+                array_push( $new_fields, array( 'type' => 'textarea', 'class' => array('form-row-full notes'),  'name' => 'order_comments', 'label' => __('Order Notes', 'jigoshop'), 'placeholder' => __('Notes about your order.', 'jigoshop') ) );
+                return $new_fields;
+            }
+            public function jigoshop_shipping_fields($fields) {
+                return array();
+            }
             /**
              * Checks all the product attributes for variation defined attributes
              *

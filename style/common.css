@@ -289,7 +289,7 @@ body {
 	height: auto;
 }
 #amty div.product div.images div.thumbnails img {
-	width: 90px;
+	width: 45px;
 	height: auto;
 }
 #amty div.product p.stock {
@@ -369,6 +369,28 @@ body {
     border-radius: 4px;
 	padding:  4px 4px 4px 0;
 
+}
+#amty #checkout-form {
+    position: static!important;
+}
+#amty .form-row {
+    position: relative;
+}
+#amty .form-row-full {
+    width: 100%;
+}
+#amty #place_order.button-disabled {
+    background-color: #000;
+}
+.error-message {
+    display:none;
+    position: absolute;
+    left: 200px;
+    top: 50px;
+    width: 150px;
+    background: #F1521F;
+    color: white;
+    padding: 3px 10px;
 }
 /* SEARCH FORM / NEWSLETTER FORM */
 #searchform .screen-reader-text {
