@@ -25,11 +25,11 @@
 				<?php if( $theme->english ):?>
 					<a class="lang-se" href="/wordpress">På svenska</a>
 					<?php $navigation_name = 'english-navigation'; ?>
-                    <a class="facebook" href="https://www.facebook.com/pages/amessagetoyou">Like us on Facebook</a>
+                    <a class="facebook" href="https://www.facebook.com/amessagetoyou">Like us on Facebook</a>
 				<?php else: ?>
 					<a class="lang-en" href="/wordpress/en">In English</a>
 					<?php $navigation_name = 'top-navigation'; ?>
-                    <a class="facebook" href="https://www.facebook.com/pages/amessagetoyou">Gilla oss på Facebook</a>
+                    <a class="facebook" href="https://www.facebook.com/amessagetoyou">Gilla oss på Facebook</a>
 				<?php endif; ?>
 				</div>
 <?php if( !is_front_page() ):?>
