@@ -36,11 +36,11 @@
 			<div id="page-header" class="header">
 				<div id="header-tools">
 				<?php if( $theme->english ):?>
-					<a class="lang-se" href="/wordpress">På svenska</a>
+					<a class="lang-se" href="/">På svenska</a>
 					<?php $navigation_name = 'english-navigation'; ?>
                     <a class="facebook" href="https://www.facebook.com/amessagetoyou">Like us on Facebook</a>
 				<?php else: ?>
-					<a class="lang-en" href="/wordpress/en">In English</a>
+					<a class="lang-en" href="/en">In English</a>
 					<?php $navigation_name = 'top-navigation'; ?>
                     <a class="facebook" href="https://www.facebook.com/amessagetoyou">Gilla oss på Facebook</a>
 				<?php endif; ?>
