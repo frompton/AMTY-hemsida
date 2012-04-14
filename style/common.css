@@ -62,8 +62,8 @@ body {
 #page-footer{
 	width: 100%;
 	background-color: #333;
-	height: 80px;
-	padding-top: 30px;
+	height: 90px;
+	padding-top: 20px;
 	
   	-webkit-border-radius: 0 0 10px 10px; 
     -moz-border-radius: 0 0 10px 10px;  
@@ -210,6 +210,11 @@ body {
 	text-align: center;
 	color: #fff;
 	font-size: 26px;
+    line-height: 20px;
+    padding: 5px 0;
+}
+#page-footer p.contact-info {
+    font-size: 12px;
 }
 #footer-nav ul {
 	width: 200px;
