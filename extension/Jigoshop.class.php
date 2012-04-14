@@ -72,6 +72,7 @@
 
 			public function wp_register_widgets() {
 				register_widget('Jigoshop_Widget_AZ_Filter');
+                //register_widget('Jigoshop_Widget_Product_Categories_AMTY');
 			}
 			
 			public function wp_add_metadata_boxes(){
@@ -321,7 +322,7 @@
                         }
                         array_push($new_fields, $field);
                         if ($field['name'] == 'billing-email') {
-                            array_push( $new_fields, array( 'type' => 'input', 'class' => array('form-row-last'),  'name' => 'billing-email-validate', 'required' => 1, 'label' => __('Bekräfta e-post /<br>Confirm Email address', 'jigoshop'), 'placeholder' => __('you@domain.com', 'jigoshop') ) );
+                            array_push( $new_fields, array( 'type' => 'input', 'class' => array('form-row-last'),  'name' => 'billing-email-validate', 'required' => 1, 'label' => __('Bekräfta e-post / Confirm Email address', 'jigoshop'), 'placeholder' => __('you@domain.com', 'jigoshop') ) );
                         }
                     }
                 }

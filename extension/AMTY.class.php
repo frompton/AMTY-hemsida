@@ -8,7 +8,7 @@
 	require( dirname( __FILE__ )  . '/Theme.class.php' );
 	require( dirname( __FILE__ )  . '/Jigoshop.class.php' );
 	require( dirname( __FILE__ )  . '/widgets/jigoshop_AZ.php' );
-
+    //require( dirname( __FILE__ )  . '/widgets/jigoshop_product-categories.php' );
 
 	if( !class_exists( 'AMTY' ) ){
 		class AMTY extends BZ_Theme{
