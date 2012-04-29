@@ -162,13 +162,18 @@
 					$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 					$filter_var = get_query_var('filter');
 					$filters = array();
-
-					$parents = array();
-					$parent = $term->parent;
+                    $type_filters = array(16,17,54,63);
+                    $genre_filters = array(28,32,36,38);
+                    $parent = $term->parent;
+                    $current = $term->term_id;
 					if ($parent == 15) {
-						$filters = get_term_children(62, 'product_cat');
-					} elseif ($parent == 62) {
-						$filters = get_term_children(15, 'product_cat');
+						if ( in_array($current, $type_filters ) ) {
+                            $filters = $genre_filters;
+                        } elseif ( in_array( $current, $genre_filters ) ) {
+                            $filters = $type_filters;
+                        }
+                            //$filters = get_term_children(62, 'product_cat');
+
 					}
 					if (!empty($filters)) {
 						echo '<div class="custom-filter">';
