@@ -13,10 +13,14 @@
 						<div class="section post-section clear-children" role="main">
 <?php while( have_posts() ): the_post();?>
 							<div class="article post-article clear-children">
-								<?php get_template_part( 'loop', 'index' );?>
+								<?php if (is_single()) { ?>
+									<?php get_template_part( 'loop', 'single' );?>
+								<?php } else { ?>								
+										<?php get_template_part( 'loop', 'index' );?>
+								<?php } ?>
 							</div>
 <?php endwhile;?>
-							<?php if (function_exists("wp_pagenavi")) { wp_pagenavi(); } ?>
+							<?php get_template_part('pagination') ?>
 						</div>
 					</div>
 					<div class="aside column small-column" role="complementary">

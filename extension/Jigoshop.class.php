@@ -6,50 +6,50 @@
 			protected $domain = 'bz-jigoshop';
 
 			public function __construct(){
-				add_action( 'init', array( &$this, 'wp_init') );
+				add_action( 'init', array($this, 'wp_init') );
 
-				remove_action( 'jigoshop_before_main_content', 'jigoshop_output_content_wrapper', 10);
-				add_action('jigoshop_before_main_content', array(&$this, 'jigoshop_before_main_content'), 10);
+				remove_action('jigoshop_before_main_content', 'jigoshop_output_content_wrapper', 10);
+				add_action('jigoshop_before_main_content', array($this, 'jigoshop_before_main_content'), 10);
 				
-				remove_action( 'jigoshop_after_main_content', 'jigoshop_output_content_wrapper_end', 10);
-				add_action('jigoshop_after_main_content', array(&$this, 'jigoshop_after_main_content'), 10);
+				remove_action('jigoshop_after_main_content', 'jigoshop_output_content_wrapper_end', 10);
+				add_action('jigoshop_after_main_content', array($this, 'jigoshop_after_main_content'), 10);
 				
-				remove_action( 'jigoshop_sidebar', 'jigoshop_get_sidebar', 10);
+				remove_action('jigoshop_sidebar', 'jigoshop_get_sidebar', 10);
 
-                add_action( 'admin_menu', array(&$this, 'jigoshop_admin_menu' ) );
+                add_action('admin_menu', array($this, 'jigoshop_admin_menu'));
 				
 				/* Pagination in loop-shop */
-				remove_action( 'jigoshop_pagination', 'jigoshop_pagination', 10 );
-				add_action( 'jigoshop_pagination', array( &$this, 'jigoshop_pagination'), 10 );
+				remove_action('jigoshop_pagination', 'jigoshop_pagination', 10);
+				add_action('jigoshop_pagination', array($this, 'jigoshop_pagination'), 10);
 
-				remove_action( 'jigoshop_template_single_summary', 'jigoshop_template_single_excerpt', 20);
-				//add_action( 'jigoshop_template_single_summary',  array(&$this, 'jigoshop_size_guide'), 10);
+				remove_action('jigoshop_template_single_summary', 'jigoshop_template_single_excerpt', 20);
+				//add_action('jigoshop_template_single_summary',  array(&$this, 'jigoshop_size_guide'), 10);
 				
 				/* HIDE EXTRA TAB FOR ATTRIBUTES */
-				remove_action( 'jigoshop_product_tabs', 'jigoshop_product_attributes_tab', 20 );
-				remove_action( 'jigoshop_product_tab_panels', 'jigoshop_product_attributes_panel', 20 );
+				remove_action('jigoshop_product_tabs', 'jigoshop_product_attributes_tab', 20);
+				remove_action('jigoshop_product_tab_panels', 'jigoshop_product_attributes_panel', 20);
 				
 				/* ADD META BOXES TO PRODUCTS */
-				add_action( 'save_post', array( &$this, 'wp_save_post_metadata' ) );
-				add_action( 'delete_post', array( &$this, 'wp_delete_post_metadata' ) );
-				add_action( 'add_meta_boxes', array( &$this, 'wp_add_metadata_boxes' ) );
+				add_action('save_post', array($this, 'wp_save_post_metadata'));
+				add_action('delete_post', array($this, 'wp_delete_post_metadata'));
+				add_action('add_meta_boxes', array($this, 'wp_add_metadata_boxes'));
 				
 				/* SHOW TAB FOR EXTRA INFORMATION */
-				add_action( 'jigoshop_product_tabs', array(&$this, 'jigoshop_product_extra_information_tab'), 20 );
-				add_action( 'jigoshop_product_tab_panels', array(&$this, 'jigoshop_product_extra_information_panel'), 20 );
+				add_action('jigoshop_product_tabs', array($this, 'jigoshop_product_extra_information_tab'), 20);
+				add_action('jigoshop_product_tab_panels', array($this, 'jigoshop_product_extra_information_panel'), 20);
 
-				add_filter( 'query_vars', array(&$this, 'wp_add_query_vars' ) );
-				add_action( 'jigoshop_before_shop_loop', array(&$this, 'jigoshop_before_shop_loop' ) );
+				add_filter('query_vars', array($this, 'wp_add_query_vars'));
+				add_action('jigoshop_before_shop_loop', array($this, 'jigoshop_before_shop_loop'));
 
                 //Remove field for Company on check out
-                add_filter( 'jigoshop_billing_fields', array( &$this, 'jigoshop_billing_fields' ) );
-                add_filter( 'jigoshop_shipping_fields', array( &$this, 'jigoshop_shipping_fields' ) );
+                add_filter('jigoshop_billing_fields', array($this, 'jigoshop_billing_fields'));
+                add_filter('jigoshop_shipping_fields', array($this, 'jigoshop_shipping_fields'));
 
 				/* REGISTER NEW WIDGETS */
-				add_action( 'widgets_init', array(&$this, 'wp_register_widgets' ) );
+				add_action('widgets_init', array($this, 'wp_register_widgets'));
 				
 				/* A-Z FILTER */
-				add_filter( 'loop-shop-posts-in', array(&$this, 'jigoshop_az_filter' ) );
+				add_filter('loop-shop-posts-in', array($this, 'jigoshop_az_filter'));
 
 				
 			}
@@ -59,7 +59,7 @@
 			}
 
             public function jigoshop_admin_menu() {
-                add_submenu_page('jigoshop', __('Lagersaldo','jigoshop'), __('Lagersaldo','jigoshop'), 'manage_options', 'jigoshop_storevalue', array( &$this, 'jigoshop_store_value' ) );
+                add_submenu_page('jigoshop', __('Lagersaldo','jigoshop'), __('Lagersaldo','jigoshop'), 'manage_options', 'jigoshop_storevalue', array($this, 'jigoshop_store_value'));
             }
 
             public function jigoshop_store_value() {
@@ -243,9 +243,7 @@
 			 * Pagination
 			 **/
 			public function jigoshop_pagination() {
-			
 				global $wp_query;
-					
 				if (  $wp_query->max_num_pages > 1 ) :
 					if (function_exists('wp_pagenavi')) {
 						wp_pagenavi();

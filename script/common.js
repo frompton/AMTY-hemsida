@@ -80,16 +80,7 @@ window.log = function(){
 	};
 
 	GS.Common = {
-		wordpress: function( hook, data, callback, ajax ){
-			if( xhr[hook] ) xhr[hook].abort();
-			xhr[hook] = $.ajax( $.extend({
-				url: ajax_url,
-				type: 'POST',
-				dataType: 'json',
-				data: $.extend({action:hook},data),
-				success: callback
-			}, ajax||{} ) );
-		}
+
 	};	
 
 	$(Common.init);
