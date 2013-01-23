@@ -15,8 +15,7 @@
 				add_action('jigoshop_after_main_content', array($this, 'jigoshop_after_main_content'), 10);
 				
 				remove_action('jigoshop_sidebar', 'jigoshop_get_sidebar', 10);
-
-                add_action('admin_menu', array($this, 'jigoshop_admin_menu'));
+				add_action('admin_menu', array($this, 'jigoshop_admin_menu'));
 				
 				/* Pagination in loop-shop */
 				remove_action('jigoshop_pagination', 'jigoshop_pagination', 10);
@@ -41,9 +40,9 @@
 				add_filter('query_vars', array($this, 'wp_add_query_vars'));
 				add_action('jigoshop_before_shop_loop', array($this, 'jigoshop_before_shop_loop'));
 
-                //Remove field for Company on check out
-                add_filter('jigoshop_billing_fields', array($this, 'jigoshop_billing_fields'));
-                add_filter('jigoshop_shipping_fields', array($this, 'jigoshop_shipping_fields'));
+				//Remove field for Company on check out
+				add_filter('jigoshop_billing_fields', array($this, 'jigoshop_billing_fields'));
+				add_filter('jigoshop_shipping_fields', array($this, 'jigoshop_shipping_fields'));
 
 				/* REGISTER NEW WIDGETS */
 				add_action('widgets_init', array($this, 'wp_register_widgets'));
@@ -51,24 +50,31 @@
 				/* A-Z FILTER */
 				add_filter('loop-shop-posts-in', array($this, 'jigoshop_az_filter'));
 
+				add_filter('widget_product_categories_args', array($this, 'test'));
+
 				
+			}
+			public function test($args) {
+				$args['order'] = 'DESC';
+
+				return $args;
 			}
 
 			public function wp_init() {
 				remove_post_type_support( 'product', 'comments' );
 			}
 
-            public function jigoshop_admin_menu() {
-                add_submenu_page('jigoshop', __('Lagersaldo','jigoshop'), __('Lagersaldo','jigoshop'), 'manage_options', 'jigoshop_storevalue', array($this, 'jigoshop_store_value'));
-            }
+			public function jigoshop_admin_menu() {
+				add_submenu_page('jigoshop', __('Lagersaldo','jigoshop'), __('Lagersaldo','jigoshop'), 'manage_options', 'jigoshop_storevalue', array($this, 'jigoshop_store_value'));
+			}
 
-            public function jigoshop_store_value() {
-                echo '<div class="wrap jigoshop">';
-                echo '<div class="icon32 icon32-jigoshop-debug" id="icon-jigoshop"><br/></div>';
-                echo '<h2>' . __('Lagersaldo','jigoshop') . '</h2>';
-                echo '<p><strong>Totalt lagersaldo:</strong> ' . $this->calculate_store_value() . ' kr</p>';
-                echo '</div>';
-            }
+			public function jigoshop_store_value() {
+				echo '<div class="wrap jigoshop">';
+				echo '<div class="icon32 icon32-jigoshop-debug" id="icon-jigoshop"><br/></div>';
+				echo '<h2>' . __('Lagersaldo','jigoshop') . '</h2>';
+				echo '<p><strong>Totalt lagersaldo:</strong> ' . $this->calculate_store_value() . ' kr</p>';
+				echo '</div>';
+			}
 
 			public function wp_register_widgets() {
 				register_widget('Jigoshop_Widget_AZ_Filter');
@@ -81,9 +87,9 @@
 			
 			public function wp_extra_information_metabox_content( $post ){
 				wp_nonce_field( plugin_basename( __FILE__ ), $this->domain . '-nonce' );
-                $purchase_price = get_post_meta( $post->ID, '_' . $this->domain . '_purchase_price', true );
-                $extra_information = get_post_meta( $post->ID, '_' . $this->domain . '_extra_information', true );
-                $internal_information = get_post_meta( $post->ID, '_' . $this->domain . '_internal_information', true );
+				$purchase_price = get_post_meta( $post->ID, '_' . $this->domain . '_purchase_price', true );
+				$extra_information = get_post_meta( $post->ID, '_' . $this->domain . '_extra_information', true );
+				$internal_information = get_post_meta( $post->ID, '_' . $this->domain . '_internal_information', true );
 				require( dirname( __FILE__ ) . '/template/extra-information-metabox.tpl.php' );			
 			}
 			
@@ -106,15 +112,15 @@
 						return $post_id;
 					}
 				}
-                if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
-                    update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
-                }
+				if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
+						update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
+				}
 				if ( isset( $_POST[$this->domain . '_extra_information'] ) ) {
-                    update_post_meta( $post_id, '_' . $this->domain . '_extra_information', $_POST[$this->domain . '_extra_information']);
-                }
-                if ( isset( $_POST[$this->domain . '_internal_information'] ) ) {
-                    update_post_meta( $post_id, '_' . $this->domain . '_internal_information', $_POST[$this->domain . '_internal_information']);
-                }
+					update_post_meta( $post_id, '_' . $this->domain . '_extra_information', $_POST[$this->domain . '_extra_information']);
+				}
+				if ( isset( $_POST[$this->domain . '_internal_information'] ) ) {
+						update_post_meta( $post_id, '_' . $this->domain . '_internal_information', $_POST[$this->domain . '_internal_information']);
+				}
 			}
 
 			public function wp_delete_post_metadata( $post_id ){
@@ -162,19 +168,19 @@
 					$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 					$filter_var = get_query_var('filter');
 					$filters = array();
-                    $type_filters = array(16,17,54,63);
-                    $genre_filters = array(28,32,36,38);
-                    $parent = $term->parent;
-                    $current = $term->term_id;
+					$type_filters = array(16,17,54,63);
+					$genre_filters = array(28,32,36,38);
+					$parent = $term->parent;
+					$current = $term->term_id;
 					if ($parent == 15) {
 						if ( in_array($current, $type_filters ) ) {
-                            $filters = $genre_filters;
-                        } elseif ( in_array( $current, $genre_filters ) ) {
-                            $filters = $type_filters;
-                        }
-                            //$filters = get_term_children(62, 'product_cat');
-
+							$filters = $genre_filters;
+						} elseif ( in_array( $current, $genre_filters ) ) {
+							$filters = $type_filters;
+						}
+						//$filters = get_term_children(62, 'product_cat');
 					}
+
 					if (!empty($filters)) {
 						echo '<div class="custom-filter">';
 						echo '	<h3>Filtrera på:</h3>';
@@ -190,15 +196,14 @@
 							array(
 								'tax_query' => array( 
 									array(
-            							'taxonomy' => 'product_cat',
-            							'field' => 'id',
-            							'terms' => array((int)$filter_var, (int)$term->term_id),
-            							'operator' => 'AND',
-            						) 
-            					)  
-            				) 
-            			);
-            			
+										'taxonomy' => 'product_cat',
+										'field' => 'id',
+										'terms' => array((int)$filter_var, (int)$term->term_id),
+										'operator' => 'AND',
+									)
+								)
+							)
+						);
 						query_posts($args);
 					}
 	

@@ -1,14 +1,13 @@
 <?php
 /*
  * @package WordPress
- * @subpackage {Themename}
+ * @subpackage AMTY
  */
 	
 	require( dirname( __FILE__ )  . '/Base.class.php' );
 	require( dirname( __FILE__ )  . '/Theme.class.php' );
 	require( dirname( __FILE__ )  . '/Jigoshop.class.php' );
 	require( dirname( __FILE__ )  . '/widgets/jigoshop_AZ.php' );
-    //require( dirname( __FILE__ )  . '/widgets/jigoshop_product-categories.php' );
 
 	if( !class_exists( 'AMTY' ) ){
 		class AMTY extends BZ_Theme{
@@ -24,17 +23,18 @@
 				parent::__construct();
 
 				$this->jigoshop = new BZ_Jigoshop();
-				add_action( 'widgets_init', array( &$this, 'wp_register_sidebars' ) );
-				add_filter( 'wp_get_attachment_image_attributes', array( &$this, 'wp_get_attachment_image_attributes' ) );
+				add_action( 'widgets_init', array( $this, 'wp_register_sidebars' ) );
+				add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ) );
+				add_shortcode( 'ip_address', array($this, 'create_shortcode_ip_address') );
 
-				add_custom_background();
-
-				add_custom_image_header('', array($this, 'amty_admin_header_style'));
-				define( 'HEADER_IMAGE_WIDTH',  807 );
-				define( 'HEADER_IMAGE_HEIGHT', 160 );
-                define( 'HEADER_IMAGE', '%s/image/headers/title_mirror_logo.png' );
-                define( 'NO_HEADER_TEXT', true );
-
+				$header_defaults = array(
+					'default-image' => get_template_directory_uri() . '/image/headers/title_mirror_logo.png',
+					'height'				=> 160,
+					'width'					=> 807,
+					'header-text'		=> false
+				);
+				add_theme_support('custom-background');
+				add_theme_support('custom-header', $header_defaults);
 				register_default_headers( array(
 					'original' => array(
 						'url' => '%s/image/headers/amty-logo.png',
@@ -43,7 +43,6 @@
 					)
 				));
 
-                add_shortcode( 'ip_address', array(&$this, 'create_shortcode_ip_address') );
 
 			}
 			public function set_english() {
@@ -103,10 +102,10 @@
 				echo '<style>.appearance_page_custom-header #headimg { min-height: 70px;}</style>';
 			}
 
-            public function create_shortcode_ip_address() {
-                $ip = $_SERVER['REMOTE_ADDR'];
-                return $ip;
-            }
+			public function create_shortcode_ip_address() {
+					$ip = $_SERVER['REMOTE_ADDR'];
+					return $ip;
+			}
 
 			/*
 			*	@param null $post_id int

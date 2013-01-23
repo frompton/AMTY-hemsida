@@ -129,7 +129,10 @@ body {
 #top-nav li a:focus,
 #top-nav li.current-menu-item a {
 	text-decoration: underline;
-
+}
+#top-nav img {
+	height: 14px;
+	margin: 2px 0 0 8px;
 }
 /* CONTENT */
 .content {
