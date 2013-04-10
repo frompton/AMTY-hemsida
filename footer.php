@@ -7,8 +7,9 @@
 			</div><!-- #page-content -->
 			<div id="page-footer" class="footer" role="contentinfo">
 				<div id="footer-content">
-					<p>AMTY - A Message To You - Since 1991</p>
-                    <p class="contact-info">AMTY, Box 794, 12002 Årsta, Sweden</p>
+				<p>AMTY - A Message To You - Since 1991</p>
+				<p class="contact-info">AMTY, Box 794, 12002 Årsta, Sweden<br>Telefon: 0700 630 111</p>
+
 					<?php wp_nav_menu( array(
 					    'theme_location' => 'footer-navigation',
 					    'menu_class' => 'nav',
