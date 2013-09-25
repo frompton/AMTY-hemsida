@@ -43,6 +43,9 @@ body{
 body {
 	background: #fff;
 }
+.page-bg {
+    background: transparent url(../image/bg-checkers.png) left top repeat-y;
+}
 #page-container{
     width: 980px;
     margin: 0 auto;
