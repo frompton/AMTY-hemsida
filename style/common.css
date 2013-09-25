@@ -347,9 +347,9 @@ body {
 #amty .product_meta .tagged_as {
 	display: block;
 }
-#amty td.actions .coupon {
+/*#amty td.actions .coupon {
 	display: none;
-}
+}*/
 #amty .quantity input.qty {
 	height: 15px;
 }
