@@ -32,6 +32,7 @@
         </script>
 	</head>
 	<body id="amty" <?php body_class();?>>
+    <div class="page-bg">
 		<div id="page-container">
 			<div id="page-header" class="header">
 				<div id="header-tools">

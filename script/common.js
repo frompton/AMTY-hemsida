@@ -17,7 +17,7 @@ window.log = function(){
 			$('.size-guide-link').each(function() {
 				$(this).attr('href', $(this).data('link'));
 			});
-			$('.size-guide-link').fancybox();
+			//$('.size-guide-link').fancybox();
             //Common.setupEmailValidation( '#checkout-form' );
 		},
         setupEmailValidation: function(selector) {

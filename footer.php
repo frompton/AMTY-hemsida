@@ -21,7 +21,7 @@
 				</div>
 			</div><!-- #page-footer -->
 		</div><!-- #page-container -->
-
+    </div><!-- .page-bg -->
 <!-- wp_footer -->	
 <?php wp_footer(); ?>
 <!-- /wp_footer -->
