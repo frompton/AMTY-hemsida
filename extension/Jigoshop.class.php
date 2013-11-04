@@ -69,10 +69,13 @@
 			}
 
 			public function jigoshop_store_value() {
+                $result = $this->calculate_store_value();
 				echo '<div class="wrap jigoshop">';
 				echo '<div class="icon32 icon32-jigoshop-debug" id="icon-jigoshop"><br/></div>';
 				echo '<h2>' . __('Lagersaldo','jigoshop') . '</h2>';
-				echo '<p><strong>Totalt lagersaldo:</strong> ' . $this->calculate_store_value() . ' kr</p>';
+				echo '<p><strong>Totalt lagersaldo:</strong> ' . $result[0] . ' kr</p>';
+                echo '<p><strong>Antal produkter med inköpspris:</strong> ' . $result[1] . '</p>';
+
 				echo '</div>';
 			}
 
@@ -113,7 +116,8 @@
 					}
 				}
 				if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
-						update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $_POST[$this->domain . '_purchase_price']);
+                    $purchase_price = str_replace(',', '.', $_POST[$this->domain . '_purchase_price']);
+                    update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $purchase_price);
 				}
 				if ( isset( $_POST[$this->domain . '_extra_information'] ) ) {
 					update_post_meta( $post_id, '_' . $this->domain . '_extra_information', $_POST[$this->domain . '_extra_information']);
@@ -274,6 +278,7 @@
             public function calculate_store_value() {
 
                 $total_price = 0;
+                $products_with_price = 0;
 
                 $args = array(
                     'post_type'	  => 'product',
@@ -314,12 +319,14 @@
                             //DEBUG: echo $post->post_title . ' - ' . $stock . ' - ' . $purchase_price . '<br>';
                             $total_price = $total_price + $purchase_price;
                         }
-
+                        $products_with_price++;
+                    } elseif ($purchase_price != '') {
+                        echo $post->ID . ' - ';
                     }
 
                 }
 
-                return $total_price;
+                return array($total_price, $products_with_price);
             }
             public function jigoshop_billing_fields($fields) {
                 $new_fields = array();
