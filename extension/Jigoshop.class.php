@@ -116,7 +116,7 @@
 					}
 				}
 				if ( isset( $_POST[$this->domain . '_purchase_price'] ) ) {
-                    $purchase_price = str_replace(',', '.', $_POST[$this->domain . '_purchase_price']);
+                    $purchase_price = trim(str_replace(',', '.', $_POST[$this->domain . '_purchase_price']));
                     update_post_meta( $post_id, '_' . $this->domain . '_purchase_price', $purchase_price);
 				}
 				if ( isset( $_POST[$this->domain . '_extra_information'] ) ) {
