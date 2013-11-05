@@ -40,10 +40,12 @@
 					<a class="lang-se" href="/">På svenska</a>
 					<?php $navigation_name = 'english-navigation'; ?>
                     <a class="facebook" href="https://www.facebook.com/amessagetoyou">Like us on Facebook</a>
+					<a class="instagram" href="https://instagram.com/amty_ska_since_91">Follow us on Instagram</a>
 				<?php else: ?>
 					<a class="lang-en" href="/en">In English</a>
 					<?php $navigation_name = 'top-navigation'; ?>
                     <a class="facebook" href="https://www.facebook.com/amessagetoyou">Gilla oss på Facebook</a>
+					<a class="instagram" href="https://instagram.com/amty_ska_since_91">Följ oss på Instagram</a>
 				<?php endif; ?>
 				</div>
 <?php if( !is_front_page() ):?>

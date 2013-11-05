@@ -83,25 +83,31 @@ body {
 #header-tools {
 	position: absolute;
 	right: 12px;
-	top: 20px;
+	top: 10px;
 }
 #header-tools a {
 	display: block;
     padding-left: 20px;
+	line-height: 16px;
+	margin-bottom: 3px;
 }
 #header-tools a:hover,
 #header-tools a:focus {
     text-decoration: underline;
 }
-#header-tools a.lang-en {
-	background: #fff url(../image/flag-en.png) left top no-repeat;
+#header-tools .lang-en {
+	background: #fff url(../image/flag-en.png) left center no-repeat;
 }
-#header-tools a.lang-se {
-	background: #fff url(../image/flag-se.png) left top no-repeat;
+#header-tools .lang-se {
+	background: #fff url(../image/flag-se.png) left center no-repeat;
 }
-#header-tools a.facebook {
+#header-tools .facebook {
     background: #fff url(../image/facebook.png) left top no-repeat;
 }
+#header-tools .instagram {
+	background: #fff url(../image/instagram.png) left top no-repeat;
+}
+
 #top-nav {
 	position: absolute;
 	bottom: 10px;
