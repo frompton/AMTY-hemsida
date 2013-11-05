@@ -60,7 +60,7 @@
 			*/
 			public function wp_setup_resources(){
 				wp_enqueue_style( 'reset', get_bloginfo( 'template_url' ) . '/style/reset.min.css', false, '1.0' );
-    			wp_enqueue_style( 'common-css', get_bloginfo( 'template_url' ) . '/style/common.css', false, '1.0.1' );
+    			wp_enqueue_style( 'common-css', get_bloginfo( 'template_url' ) . '/style/common.css', false, '1.0.2' );
 
     			wp_deregister_script( 'jquery' );
     			wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', false, '1.7.1' );
