@@ -18,8 +18,8 @@
 				add_action('admin_menu', array($this, 'jigoshop_admin_menu'));
 				
 				/* Pagination in loop-shop */
-				remove_action('jigoshop_pagination', 'jigoshop_pagination', 10);
-				add_action('jigoshop_pagination', array($this, 'jigoshop_pagination'), 10);
+//				remove_action('jigoshop_pagination', 'jigoshop_pagination', 10);
+//				add_action('jigoshop_pagination', array($this, 'jigoshop_pagination'), 10);
 
 				remove_action('jigoshop_template_single_summary', 'jigoshop_template_single_excerpt', 20);
 				//add_action('jigoshop_template_single_summary',  array(&$this, 'jigoshop_size_guide'), 10);
@@ -128,6 +128,9 @@
 			}
 
 			public function wp_delete_post_metadata( $post_id ){
+				$fp = fopen(dirname( __FILE__ ) . '/../log.txt', 'a');
+				fputs($fp, 'Delete post meta: '. $post_id);
+				fclose($fp);
 				delete_post_meta( $post_id, '_' . $this->domain . '_extra_information' );
                 delete_post_meta( $post_id, '_' . $this->domain . '_purchase_price' );
             }
